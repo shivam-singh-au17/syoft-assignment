@@ -1,0 +1,159 @@
+openapi: 3.0.0
+info:
+  title: Syoft APIs
+  description: API for Syoft
+  version: 1.0.0
+
+servers:
+  - url: "http://localhost:3000/"
+
+tags:
+  - name: User_Auth
+    description: Endpoints related to User_Auth
+  - name: Product
+    description: Endpoints related to Product
+
+paths:
+  /api/v1/register:
+    post:
+      tags:
+        - User_Auth
+      summary: Create a new User
+      requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_Register'
+      responses:
+        200:
+          description: OK
+
+  /api/v1/login:
+    post:
+      tags:
+        - User_Auth
+      summary: Login User
+      requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User_Login'
+      responses:
+        200:
+          description: OK
+
+  /api/v1/product:
+    post:
+      tags:
+        - Product
+      summary: Create Product
+      requestBody:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+      responses:
+        200:
+          description: OK
+
+  /api/v1/products:
+    get:
+      tags:
+        - Product
+      summary: Get Products
+      responses:
+        200:
+          description: Array of Products
+          application/json:
+            schema:
+              type: array
+              items:
+                  $ref: '#/components/schemas/Product'
+
+  /product/{:id}:
+    delete:
+      tags:
+        - Product
+      summary: Delete Product
+      parameters:
+      - name: id
+        in: path
+        description: ID Of The Requested Product
+        required: true
+        type: string
+      responses:
+        200:
+          description: Record Deleted
+          application/json:
+              schema:
+                type: array
+    patch:
+      tags:
+        - Product
+      summary: Update Product
+      parameters:
+      - name: id
+        in: path
+        description: ID Of The Requested Product
+        required: true
+        type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+      200:
+        description: OK
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT 
+
+  schemas:
+    User_Register:
+      type: object
+      required:
+        - username
+        - email
+        - password
+        - role
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        role:
+          type: array
+          items:
+            type: string
+
+    User_Login:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+
+    Product:
+      type: object
+      required:
+        - title
+        - description
+        - inventoryCount
+      properties:
+        title:
+          type: string
+        description:
+          type: string
+        inventoryCount:
+          type: number
