@@ -21,4 +21,6 @@ npm start
 http://localhost:3000/docs
 ```
 
+### Authorization work for only three roles - admin, manager, and staff
+
 ### Thank you for giving it a read...
