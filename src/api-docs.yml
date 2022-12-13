@@ -70,7 +70,7 @@ paths:
               items:
                   $ref: '#/components/schemas/Product'
 
-  /product/{:id}:
+  /api/v1/product/{:id}:
     delete:
       tags:
         - Product
